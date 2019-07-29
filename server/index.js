@@ -5,16 +5,20 @@ const app = express();
 const PORT = 3003;
 
 massive({
-  host: 'localhot',
+  host: 'localhost',
   port: 5432,
   database: 'node4db',
-  user: 'postgress',
+  user: 'postgres',
   password: 'node4db'
 }).then(db => {
   app.set('db', db);
   app.use(express.json());
  
-// app.post('/api/register')
-  app.listen(PORT, ()=>{ console.log(`Server listening d(-_-)b port: ${PORT}`)});
-});
 
+  app.post('/api/register', user.register);
+  app.get('/api/protected/data', user.getData);
+  app.post('/api/login', user.login);
+
+  app.listen(PORT, ()=>{ console.log(`Server listening d(-_-)b port: ${PORT}`)});
+})
+.catch(console.error);
